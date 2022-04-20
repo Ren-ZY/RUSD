@@ -1,2 +1,2 @@
 # RUSD
-A simple but powerful tool to detect stackoverflow vulnerability in Rust crates : )
+Rust Stackoverflow Detector(RUSD): A simple but powerful tool to detect stackoverflow vulnerability in Rust crates : )

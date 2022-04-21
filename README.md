@@ -26,7 +26,7 @@ fn d(){
 There are two recursive functions in this case:
 1. b()->c()->b()
 2. a()->b()->c()->d()->a()
-These two recursive functions share the two same functions: b(), c() 
+These two recursive functions share two same functions: b(), c() 
 Our tool can detect these two recursive functions, including the call chain and location
 ```
 

@@ -30,7 +30,7 @@ These two recursive functions share two same functions: b(), c()
 Our tool can detect these two recursive functions, including the call chain and location
 ```
 
-Now we have used this tool to find all the problematic recursive funtions in the stackoverflow CVEs, including:
+Now we have used this tool to find all the problematic recursive functions in those stackoverflow CVEs, including:
 
 * CVE-2018-20993:  Uncontrolled recursion leads to abort in deserialization
 * CVE-2018-20994:  Stackoveflow when parsing malicious DNS packet

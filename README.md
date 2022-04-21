@@ -41,7 +41,7 @@ Now we have used this tool to find all the problematic recursive functions in th
 
 ## Install
 
-1. New a file named ""**rust-toolchain.toml**"" in the rusd root directory, then write the following lines into your ""**rust-toolchain.toml**"".
+**1. New a file named [rust-toolchain.toml] in the rusd root directory, then write the following lines into your [rust-toolchain.toml]**.
 
 ```
 [toolchain]
@@ -51,7 +51,7 @@ components = ["rustc-dev", "llvm-tools-preview", "rust-src"]
 
 This file will automatically downlod the toolcahin and components to build RUSD tool.
 
-2. Run "install_rusd.sh" in your rusd root directory.
+**2. Run "install_rusd.sh" in your rusd root directory.**
 
 The **RUSD** tool uses a shell script called `install_rusd.sh` to build and install.
 You have to switch into the rusd root directory and run it in your bash(Linux)/zsh(MacOS). 

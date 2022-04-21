@@ -15,8 +15,8 @@ Now we have used this tool to find all the vulnerabilities in the CVEs, includin
 
 ## Install
 
-1. First, you have to new a file named **rust-toolchain.toml** in the rusd root directory
-them write the following lines into your **rust-toolchain.toml**
+1. First, you have to new a file named ""**rust-toolchain.toml**"" in the rusd root directory
+them write the following lines into your ""**rust-toolchain.toml**""
 
 ```
 [toolchain]

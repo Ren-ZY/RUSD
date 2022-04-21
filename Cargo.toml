@@ -1,0 +1,35 @@
+
+[package]
+name = "rusd"
+version = "0.1.0"
+authors = ["ZhiYong Ren <20210240038@fudan.edu.cn>"]
+default-run = "rusd"
+edition = "2018"
+# exclude = ["samples"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+test = false
+doctest = false
+
+[[bin]]
+name = "rusd"
+test = false
+doctest = false
+
+[[bin]]
+name = "cargo-rusd"
+test = false
+doctest = false
+
+[dependencies]
+log = "0.4.14"
+fern = "0.6.0"
+cargo_metadata = "0.11"
+rustc_version = "0.2.3"
+chrono = "0.4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.72"
+wait-timeout = "0.2"
+which = "4.2.2"

@@ -3,7 +3,33 @@
 **Thank you for noticing our tool!**
 
 This tool is designed to find the stackoverflow vulnerabilty on the **crate** level.
-It can find all the recursion functions in one crate, including those **cross-funtion recursive calls**.
+It can find all the recursion functions in one crate(**call chain and location**), including those complicate **cross-function recursive calls**. e.g.
+
+```
+fn a(){
+    b();
+}
+
+fn b(){
+    c();
+}
+
+fn c(){
+    d();
+    b();
+}
+
+fn d(){
+    a();
+}
+
+There are two recursive functions in this case:
+1. b()->c()->b()
+2. a()->b()->c()->d()->a()
+These two recursive functions share the two same functions: b(), c() 
+Our tool can detect these two recursive functions, including the call chain and location
+```
+
 Now we have used this tool to find all the vulnerabilities in the CVEs, including:
 
 * CVE-2018-20993:  Uncontrolled recursion leads to abort in deserialization

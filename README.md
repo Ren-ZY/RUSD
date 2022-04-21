@@ -45,11 +45,9 @@ In Linux, the CARGO_HOME always means ~/.cargo/bin.
 
 You can use this tool to detect stackoverflow vulnerability after the installation is done. 
 
-1. First, after the intallation done, you can find **rusd** in the ~/.cargo directory.
-2. Switch into your crate which you want to detect.
-3. Add a toolchain file named "rust-toolchain.toml", the content in the file is the same as the file in the rusd root directory.
-4. Simply run **cargo rusd**. Then you can see the result of the detection.
+1. Switch into your crate.
+2. copy the **"rust-toolchain.toml"** file into the **root crate directory**.
+3. Simply run **cargo rusd**. Then you can see the result of the detection.
 
-
-**NOTE**: This tool is used on **crate** level and do not supports workspace.
+**NOTE**: This tool is used on **crate** level and do not supports **workspace**.
 

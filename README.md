@@ -18,11 +18,11 @@ Now we have used this tool to find all the vulnerabilities in the CVEs, includin
 1. First, you have to new a file named "rust-toolchain.toml" in the rusd root directory
 them write the following lines into your "rust-toolchain.toml"
 
-"""
+```
 [toolchain]
 channel = "nightly-2021-01-03"
 components = ["rustc-dev", "llvm-tools-preview", "rust-src"]
-"""
+```
 
 this file will automatically downlod the toolcahin and components to build RUSD tool.
 **NOTE**: Different channel has different rustc API and rust features. We provide two versions of RUSD, separately using nightly-2020-08-24 and nightly-2021-01-03.

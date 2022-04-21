@@ -2,7 +2,7 @@
 
 **Thank you for noticing our tool!**
 
-This tool is designed to find the stackoverflow vulnerabilty on the **crate** level.
+This tool is designed to find the stackoverflow vulnerabilty in Rust crates.
 It can find all **recursive functions** in one crate, including those complicate **cross-function recursive calls**. e.g.
 
 ```

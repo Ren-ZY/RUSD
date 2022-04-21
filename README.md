@@ -70,7 +70,7 @@ In Linux, the CARGO_HOME always means ~/.cargo/bin.
 
 You can use this tool to detect stackoverflow vulnerability in rust crates after the installation is done. 
 
-1. Switch into your crate.
+1. Switch into your crate directory.
 2. copy the **"rust-toolchain.toml"** file into your **crate** directory.
 3. Simply run **cargo rusd**. Then you can see the result of the detection.
 

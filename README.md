@@ -41,7 +41,7 @@ Now we have used this tool to find all the problematic recursive functions in th
 
 ## Install
 
-1. First, you have to new a file named ""**rust-toolchain.toml**"" in the rusd root directory, then write the following lines into your ""**rust-toolchain.toml**""
+1. New a file named ""**rust-toolchain.toml**"" in the rusd root directory, then write the following lines into your ""**rust-toolchain.toml**"".
 
 ```
 [toolchain]
@@ -51,11 +51,10 @@ components = ["rustc-dev", "llvm-tools-preview", "rust-src"]
 
 This file will automatically downlod the toolcahin and components to build RUSD tool.
 
-2. Secondly, The **RUSD** tool uses a shell script called `install_rusd.sh` to build and install.
-You have to switch into the rusd root directory and run it in your bash(Linux)/zsh(MacOS). 
+2. Run "install_rusd.sh" in your rusd root directory.
 
-**NOTE**: Different channel has different rustc API and rust features. We provide two versions of RUSD, separately using nightly-2020-08-24 and nightly-2021-01-03.
-Besides, you can modify the source code using the new version rustc API and change the toolchain manually. 
+The **RUSD** tool uses a shell script called `install_rusd.sh` to build and install.
+You have to switch into the rusd root directory and run it in your bash(Linux)/zsh(MacOS). 
 
 ```
 ./install_rlc.sh
@@ -64,6 +63,9 @@ Besides, you can modify the source code using the new version rustc API and chan
 **install_rusd.sh** can install the binary tool into your CARGO_HOME/bin. 
 
 In Linux, the CARGO_HOME always means ~/.cargo/bin.
+
+**NOTE**: Different channel has different rustc API and rust features. We provide two versions of RUSD, separately using nightly-2020-08-24 and nightly-2021-01-03.
+Besides, you can modify the source code using the new version rustc API and change the toolchain manually. 
 
 
 ## Using RUSD

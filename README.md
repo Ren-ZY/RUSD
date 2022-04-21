@@ -64,8 +64,7 @@ You have to switch into the rusd root directory and run it in your bash(Linux)/z
 
 In Linux, the CARGO_HOME always means ~/.cargo/bin.
 
-**NOTE**: Different channel has different rustc API and rust features. We provide two versions of RUSD, separately using nightly-2020-08-24 and nightly-2021-01-03.
-Besides, you can modify the source code using the new version rustc API and change the toolchain manually. 
+**NOTE**: Rust has developed fast nowadays. Different channel has different rustc API and rust features. Some new version crates cannot be compiled with the old rustc compiler. So we provide two versions of RUSD, separately using nightly-2020-08-24 and nightly-2021-01-03. You can also modify the source code using the new version rustc API and change the toolchain manually if some crates cannot be compiled successfully using our tool.
 
 
 ## Using RUSD

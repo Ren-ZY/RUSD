@@ -6,12 +6,12 @@ This tool is designed to find the stackoverflow vulnerabilty on the **crate** le
 It can find all the recursion functions in one crate, including those **cross-funtion recursive calls**.
 Now we have used this tool to find all the vulnerabilities in the CVEs, including:
 
-* CVE-2018-20993: Uncontrolled recursion leads to abort in deserialization
-* CVE-2018-20994: Stackoveflow when parsing malicious DNS packet
-* CVE-2019-15542: Uncontrolled recursion leads to abort in HTML serialization
-* CVE-2019-25001: Flaw in CBOR deserializer allows stackoveflow
-* CVE-2020-35857: Stackoverflow when resolving additional records from MX or SRV null targets
-* CVE-2020-35858: Parsing a specially crafted message can result in a stackoverflow
+* CVE-2018-20993:  Uncontrolled recursion leads to abort in deserialization
+* CVE-2018-20994:  Stackoveflow when parsing malicious DNS packet
+* CVE-2019-15542:  Uncontrolled recursion leads to abort in HTML serialization
+* CVE-2019-25001:  Flaw in CBOR deserializer allows stackoveflow
+* CVE-2020-35857:  Stackoverflow when resolving additional records from MX or SRV null targets
+* CVE-2020-35858:  Parsing a specially crafted message can result in a stackoverflow
 
 ## Install
 

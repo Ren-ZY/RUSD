@@ -36,7 +36,9 @@ You have to switch into the rusd root directory and run in your bash(Linux)/zsh(
 ./install_rlc.sh
 ```
 
-**install_rusd.sh** can install the binary tool into your CARGO_HOME/bin. In Linux, the CARGO_HOME always means ~/.cargo/bin.
+**install_rusd.sh** can install the binary tool into your CARGO_HOME/bin. 
+
+In Linux, the CARGO_HOME always means ~/.cargo/bin.
 
 
 ## Using RUSD

@@ -51,11 +51,11 @@ components = ["rustc-dev", "llvm-tools-preview", "rust-src"]
 
 This file will automatically downlod the toolcahin and components to build RUSD tool.
 
-**NOTE**: Different channel has different rustc API and rust features. We provide two versions of RUSD, separately using nightly-2020-08-24 and nightly-2021-01-03.
-Besides, you can modify the source code using the new version rustc API and change the toolchain manually. 
-
 2. Secondly, The **RUSD** tool uses a shell script called `install_rusd.sh` to build and install.
 You have to switch into the rusd root directory and run it in your bash(Linux)/zsh(MacOS). 
+
+**NOTE**: Different channel has different rustc API and rust features. We provide two versions of RUSD, separately using nightly-2020-08-24 and nightly-2021-01-03.
+Besides, you can modify the source code using the new version rustc API and change the toolchain manually. 
 
 ```
 ./install_rlc.sh

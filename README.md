@@ -25,6 +25,7 @@ components = ["rustc-dev", "llvm-tools-preview", "rust-src"]
 ```
 
 this file will automatically downlod the toolcahin and components to build RUSD tool.
+
 **NOTE**: Different channel has different rustc API and rust features. We provide two versions of RUSD, separately using nightly-2020-08-24 and nightly-2021-01-03.
 Besides, you can modify the source code to adapt the new version and change the toolchain manually. 
 

@@ -2,9 +2,9 @@
 
 Thank you for noticing our tool!  : )
 
-This tool is designed to find the stackoverflow vulnerabilty on the crate level.
+This tool is designed to find the stackoverflow vulnerabilty on the **crate** level.
 It can find all the recursion functions in one crate, including those **cross-funtion recursive calls**.
-Now we have used this tool to find all the vulnerabilities in the CVEs, inlucding:
+Now we have used this tool to find all the vulnerabilities in the CVEs, including:
 
 * CVE-2018-20993: Uncontrolled recursion leads to abort in deserialization
 * CVE-2018-20994: Stackoveflow when parsing malicious DNS packet

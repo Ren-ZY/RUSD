@@ -3,7 +3,7 @@
 **Thank you for noticing our tool!**
 
 This tool is designed to find the stackoverflow vulnerabilty on the **crate** level.
-It can find all recursive functions in one crate(**call chain and location**), including those complicate **cross-function recursive calls**. e.g.
+It can find all **recursive functions** in one crate, including those complicate **cross-function recursive calls**. e.g.
 
 ```
 fn a(){

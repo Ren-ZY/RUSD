@@ -1,6 +1,6 @@
 # RUSD -- Rust Stackoverflow Detector 
 
-Thank you for noticing our tool! 
+**Thank you for noticing our tool!**
 
 This tool is designed to find the stackoverflow vulnerabilty on the **crate** level.
 It can find all the recursion functions in one crate, including those **cross-funtion recursive calls**.

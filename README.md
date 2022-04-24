@@ -57,7 +57,7 @@ The **RUSD** tool uses a shell script called `install_rusd.sh` to build and inst
 You have to switch into the rusd root directory and run it in your bash(Linux)/zsh(MacOS). 
 
 ```
-./install_rlc.sh
+./install_rusd.sh
 ```
 
 **install_rusd.sh** can install the binary tool into your CARGO_HOME/bin. 

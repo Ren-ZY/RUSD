@@ -1,4 +1,4 @@
-# RUSD -- Rust Stackoverflow Detector 
+# RustSoda -- Rust Stackoverflow Detector 
 
 **Thank you for noticing our tool!**
 
@@ -49,11 +49,11 @@ channel = "nightly-2021-01-03"
 components = ["rustc-dev", "llvm-tools-preview", "rust-src"]
 ```
 
-This file will automatically downlod the toolcahin and components to build RUSD tool.
+This file will automatically downlod the toolcahin and components to build RustSoda tool.
 
 **2. Run "install_rusd.sh" in your rusd root directory.**
 
-The **RUSD** tool uses a shell script called `install_rusd.sh` to build and install.
+The **RustSoda** tool uses a shell script called `install_rusd.sh` to build and install.
 You have to switch into the rusd root directory and run it in your bash(Linux)/zsh(MacOS). 
 
 ```
@@ -67,13 +67,13 @@ In Linux, the CARGO_HOME always means ~/.cargo/.
 **NOTE**: Rust has developed fast nowadays. Different channel has different rustc API and rust features. Some new version crates cannot be compiled with the old rustc compiler. So we provide two versions of RUSD, separately using nightly-2020-08-24 and nightly-2021-01-03. You can also modify the source code using the new version rustc API and change the toolchain manually if some crates cannot be compiled successfully using our tool.
 
 
-## Using RUSD
+## Using RustSoda
 
 You can use this tool to detect stackoverflow vulnerability in rust crates after the installation is done. 
 
 1. Switch into your crate directory.
 2. copy the **"rust-toolchain.toml"** file into your **crate** directory.
-3. Simply run **cargo rusd**. Then you can see the result of the detection.
+3. Simply run **cargo rustsoda**. Then you can see the result of the detection.
 
 **NOTE**: This tool is used on **crate** level and do not supports **workspace**.
 

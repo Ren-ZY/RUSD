@@ -82,10 +82,10 @@ impl<'b, 'tcx> CallGraphVisitor<'b, 'tcx>{
             } => {
                 match func{
                     mir::Operand::Constant(constant) => {
-                        if let TyKind::FnDef(callee_def_id, callee_substs) = constant.literal.ty.kind(){
+                        if let TyKind::FnDef(callee_def_id, callee_substs) = constant.literal.ty.kind{
                              if !is_std_crate(&self.tcx.crate_name(callee_def_id.krate).to_string()){ 
                                  let param_env = self.tcx.param_env(self.def_id);
-                                 if let Ok(Some(instance)) = Instance::resolve(self.tcx, param_env, *callee_def_id, callee_substs){
+                                 if let Ok(Some(instance)) = Instance::resolve(self.tcx, param_env, callee_def_id, callee_substs){
                                      let mut instance_def_id = None;
                                      match instance.def{
                                          InstanceDef::Item(def_id) => {
@@ -107,6 +107,7 @@ impl<'b, 'tcx> CallGraphVisitor<'b, 'tcx>{
                                              let callee_def_path = get_fn_path(&self.tcx, instance_def_id); 
                                              let location = get_fn_location(&self.tcx, instance_def_id);
                                              let msg = "\x1b[031mwarning!! find a recursion function which may cause stackoverflow\x1b[0m";
+                                             println!("{}", instance);
                                              progress_info!("{}: {}->{}; \x1b[031mlocation\x1b[0m: {}", msg, caller_def_path, callee_def_path, location); 
                                          }
                                          let caller_def_path = get_fn_path(&self.tcx, self.def_id);
@@ -117,18 +118,18 @@ impl<'b, 'tcx> CallGraphVisitor<'b, 'tcx>{
                                      }
                                  }
                                  else{
-                                     if self.def_id == *callee_def_id{
+                                     if self.def_id == callee_def_id{
                                          let caller_def_path = get_fn_path(&self.tcx, self.def_id);
-                                         let callee_def_path = get_fn_path(&self.tcx, *callee_def_id); 
-                                         let location = get_fn_location(&self.tcx, *callee_def_id);  
+                                         let callee_def_path = get_fn_path(&self.tcx, callee_def_id); 
+                                         let location = get_fn_location(&self.tcx, callee_def_id);  
                                          let msg = "\x1b[031mwarning!! find a recursion function which may cause stackoverflow\x1b[0m";
                                          progress_info!("{}: {}->{}; \x1b[031mlocation\x1b[0m: {}", msg, caller_def_path, callee_def_path,location); 
                                      }
                                      let caller_def_path = get_fn_path(&self.tcx, self.def_id);
-                                     let callee_def_path = get_fn_path(&self.tcx, *callee_def_id);
+                                     let callee_def_path = get_fn_path(&self.tcx, callee_def_id);
                                      //let location = get_fn_location(&self.tcx, callee_def_id);
                                      //println!("callee: {}; location: {}", callee_def_path, location);
-                                     self.add_in_call_graph(&caller_def_path, *callee_def_id, &callee_def_path);
+                                     self.add_in_call_graph(&caller_def_path, callee_def_id, &callee_def_path);
                                  }
                              }
                         }

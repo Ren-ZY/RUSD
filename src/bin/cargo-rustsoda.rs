@@ -16,13 +16,13 @@ use rustc_version::VersionMeta;
 
 use wait_timeout::ChildExt;
 
-use rusd::log::{self, Verbosity};
-use rusd::{progress_debug, progress_error, progress_info, progress_warn};
+use rustsoda::log::{self, Verbosity};
+use rustsoda::{progress_debug, progress_error, progress_info, progress_warn};
 
-const CARGO_RUSD_HELP: &str = "Welcome to our RUSD: Rust Stackoverflow Detector!! :)";
+const CARGO_RUSTSODA_HELP: &str = "Welcome to our RUSTSODA: Rust Stackoverflow Detector!! :)";
 
 fn show_help() {
-    println!("{}", CARGO_RUSD_HELP);
+    println!("{}", CARGO_RUSTSODA_HELP);
 }
 
 fn show_error<T: AsRef<str>>(msg: T) -> ! {
@@ -31,8 +31,8 @@ fn show_error<T: AsRef<str>>(msg: T) -> ! {
 }
 
 fn version_info() -> VersionMeta {
-    VersionMeta::for_command(Command::new(find_rusd()))
-        .expect("failed to determine underlying rustc version of Rusd")
+    VersionMeta::for_command(Command::new(find_rustsoda()))
+        .expect("failed to determine underlying rustc version of RustSoda")
 }
 
 fn has_arg_flag(name: &str) -> bool {
@@ -109,7 +109,7 @@ fn get_first_arg_with_rs_suffix() -> Option<String> {
     args.find(|arg| arg.ends_with(".rs"))
 }
 
-// test rustc and rusd are from the same sysroot.
+// test rustc and rustsoda are from the same sysroot.
 fn test_sysroot_consistency() {
     fn get_sysroot(mut cmd: Command) -> PathBuf {
         let out = cmd
@@ -133,24 +133,24 @@ fn test_sysroot_consistency() {
 
     let rustc_sysroot = get_sysroot(Command::new("rustc"));
     progress_debug!("rustc_sysroot :{:?}", rustc_sysroot);
-    progress_debug!("find_rusd: {:?}", find_rusd());
-    let rusd_sysroot = get_sysroot(Command::new(find_rusd()));
+    progress_debug!("find_rustsoda: {:?}", find_rustsoda());
+    let rustsoda_sysroot = get_sysroot(Command::new(find_rustsoda()));
 
-    if rustc_sysroot != rusd_sysroot {
+    if rustc_sysroot != rustsoda_sysroot {
         show_error(format!(
-            "rusd was built for a different sysroot than the rustc in your current toolchain.\n\
-             Make sure you use the same toolchain to run rusd that you used to build it!\n\
+            "rustsoda was built for a different sysroot than the rustc in your current toolchain.\n\
+             Make sure you use the same toolchain to run rustsoda that you used to build it!\n\
              rustc sysroot: `{}`\n\
-             rusd sysroot: `{}`",
+             rustsoda sysroot: `{}`",
             rustc_sysroot.display(),
-            rusd_sysroot.display()
+            rustsoda_sysroot.display()
         ));
     }
 }
 
-fn find_rusd() -> PathBuf {
+fn find_rustsoda() -> PathBuf {
     let mut path = std::env::current_exe().expect("current executable path invalid");
-    path.set_file_name("rusd");
+    path.set_file_name("rustsoda");
     path
 }
 
@@ -187,7 +187,7 @@ fn cargo_package() -> cargo_metadata::Package {
             }
         })
         .unwrap_or_else(|| {
-            show_error("This seems to be a workspace, which is not supported by cargo-rusd");
+            show_error("This seems to be a workspace, which is not supported by cargo-rustsoda");
         });
 
     metadata.packages.remove(package_index)
@@ -248,7 +248,7 @@ fn clean_package(package_name: &str) {
     }
 }
 
-fn phase_cargo_rusd() {
+fn phase_cargo_rustsoda() {
     let verbose = has_arg_flag("-v");
 
     // Some basic sanity check
@@ -262,19 +262,19 @@ fn phase_cargo_rusd() {
     targets.sort_by_key(|target| TargetKind::from(target) as u8);
 
     for target in targets {
-        // Skip `cargo rusd`
+        // Skip `cargo rustsoda`
         let mut args = std::env::args().skip(2);
         let kind = TargetKind::from(&target);
 
         // Now we run `cargo check $FLAGS $ARGS`, giving the user the
         // change to add additional arguments. `FLAGS` is set to identify
-        // this target. The user gets to control what gets actually passed to Rusd.
+        // this target. The user gets to control what gets actually passed to RustSoda.
         let mut cmd = Command::new("cargo");
         cmd.arg("check");
 
         // Allow an option to use `xargo check` instead of `cargo`, this is used
         // for analyzing the rust standard library.
-        if std::env::var_os("RUSD_USE_XARGO_INSTEAD_OF_CARGO").is_some() {
+        if std::env::var_os("RUSTSODA_USE_XARGO_INSTEAD_OF_CARGO").is_some() {
             cmd = Command::new("xargo-check");
         }
 
@@ -288,7 +288,7 @@ fn phase_cargo_rusd() {
             TargetKind::Bin => {
                 cmd.arg("--bin")
                 .arg(&target.name);
-                cmd.env("RUSD_BIN", &target.name);
+                cmd.env("RUSTSODA_BIN", &target.name);
             }
             TargetKind::Unknown => {
                 progress_warn!(
@@ -321,10 +321,10 @@ fn phase_cargo_rusd() {
             cmd.arg(version_info().host);
         }
 
-        // Add suffix to RUSD_REPORT_PATH
-        if let Ok(report) = env::var("RUSD_REPORT_PATH") {
+        // Add suffix to RUSTSODA_REPORT_PATH
+        if let Ok(report) = env::var("RUSTSODA_REPORT_PATH") {
             cmd.env(
-                "RUSD_REPORT_PATH",
+                "RUSTSODA_REPORT_PATH",
                 format!("{}-{}-{}", report, kind, &target.name),
             );
         }
@@ -336,7 +336,7 @@ fn phase_cargo_rusd() {
         // these arguments.
         let args_vec: Vec<String> = args.collect();
         cmd.env(
-            "RUSD_ARGS",
+            "RUSTSODA_ARGS",
             serde_json::to_string(&args_vec).expect("failed to serialize args"),
         );
 
@@ -344,17 +344,17 @@ fn phase_cargo_rusd() {
         // i.e., the first argument is `rustc` -- which is what we use in `main` to distinguish
         // the two codepaths.
         if env::var_os("RUSTC_WRAPPER").is_some() {
-            println!("WARNING: Ignoring existing `RUSTC_WRAPPER` environment variable, Rusd does not support wrapping.");
+            println!("WARNING: Ignoring existing `RUSTC_WRAPPER` environment variable, RustSoda does not support wrapping.");
         }
 
         let path = std::env::current_exe().expect("current executable path invalid");
         cmd.env("RUSTC_WRAPPER", path);
         if verbose {
-            cmd.env("RUSD_VERBOSE", ""); // this makes `inside_cargo_rustc` verbose.
+            cmd.env("RUSTSODA_VERBOSE", ""); // this makes `inside_cargo_rustc` verbose.
             eprintln!("+ {:?}", cmd);
         }
 
-        progress_info!("Running rusd for target {}:{}", kind, &target.name);
+        progress_info!("Running rustsoda for target {}:{}", kind, &target.name);
         let mut child = cmd.spawn().expect("could not run cargo check");
         // 1 hour timeout
         match child
@@ -380,12 +380,12 @@ fn phase_cargo_rustc() {
     /// the "target" architecture, in contrast to the "host" architecture.
     /// Host crates are for build scripts and proc macros and still need to
     /// be built like normal; target crates need to be built for or interpreted
-    /// by Rusd.
+    /// by RustSoda.
     ///
     /// Currently, we detect this by checking for "--target=", which is
     /// never set for host crates. This matches what rustc bootstrap does,
     /// which hopefully makes it "reliable enough". This relies on us always
-    /// invoking cargo itself with `--target`, which `phase_cargo_rusd` ensures.
+    /// invoking cargo itself with `--target`, which `phase_cargo_rustsoda` ensures.
     fn contains_target_flag() -> bool {
         get_arg_flag_value("--target").is_some()
     }
@@ -410,7 +410,7 @@ fn phase_cargo_rustc() {
 
     fn run_command(mut cmd: Command) {
         // Run it.
-        let verbose = std::env::var_os("RUSD_VERBOSE").is_some();
+        let verbose = std::env::var_os("RUSTSODA_VERBOSE").is_some();
         if verbose {
             eprintln!("+ {:?}", cmd);
         }
@@ -430,12 +430,12 @@ fn phase_cargo_rustc() {
     let is_direct_target = contains_target_flag() && is_target_crate();
     let mut is_additional_target = false;
 
-    // Perform analysis if the crate being compiled is in the RUSD_ALSO_ANALYZE
+    // Perform analysis if the crate being compiled is in the RUSTSODA_ALSO_ANALYZE
     // environment variable.
-    if let (Ok(cargo_pkg_name), Ok(rusd_also_analyze_crates)) =
-        (env::var("CARGO_PKG_NAME"), env::var("RUSD_ALSO_ANALYZE"))
+    if let (Ok(cargo_pkg_name), Ok(rustsoda_also_analyze_crates)) =
+        (env::var("CARGO_PKG_NAME"), env::var("RUSTSODA_ALSO_ANALYZE"))
     {
-        if rusd_also_analyze_crates
+        if rustsoda_also_analyze_crates
             .split(',')
             .any(|x| x.to_lowercase() == cargo_pkg_name.to_lowercase())
         {
@@ -444,12 +444,12 @@ fn phase_cargo_rustc() {
     }
 
     if is_direct_target || is_additional_target {
-        let mut cmd = Command::new(find_rusd());
-        cmd.args(std::env::args().skip(2)); // skip `cargo-rusd rustc`
+        let mut cmd = Command::new(find_rustsoda());
+        cmd.args(std::env::args().skip(2)); // skip `cargo-rustsoda rustc`
 
-        if let Ok(report) = env::var("RUSD_REPORT_PATH") {
+        if let Ok(report) = env::var("RUSTSODA_REPORT_PATH") {
             cmd.env(
-                "RUSD_REPORT_PATH",
+                "RUSTSODA_REPORT_PATH",
                 format!(
                     "{}-{}",
                     report,
@@ -458,34 +458,34 @@ fn phase_cargo_rustc() {
             );
         }
 
-        // This is the local crate that we want to analyze with Rusd.
+        // This is the local crate that we want to analyze with RustSoda.
         // (Testing `target_crate` is needed to exclude build scripts.)
-        // We deserialize the arguments that are meant for Rusd from the special
-        // environment variable "RUSD_ARGS", and feed them to the 'rusd' binary.
+        // We deserialize the arguments that are meant for RustSoda from the special
+        // environment variable "RUSTSODA_ARGS", and feed them to the 'rustsoda' binary.
         //
         // `env::var` is okay here, well-formed JSON is always UTF-8.
-        let magic = std::env::var("RUSD_ARGS").expect("missing RUSD_ARGS");
-        let rusd_args: Vec<String> =
-            serde_json::from_str(&magic).expect("failed to deserialize RUSD_ARGS");
-        cmd.args(rusd_args);
+        let magic = std::env::var("RUSTSODA_ARGS").expect("missing RUSTSODA_ARGS");
+        let rustsoda_args: Vec<String> =
+            serde_json::from_str(&magic).expect("failed to deserialize RUSTSODA_ARGS");
+        cmd.args(rustsoda_args);
 
         run_command(cmd);
     }
 
-    // Rusd does not build anything.
+    // RustSoda does not build anything.
     // We need to run rustc (or sccache) to build dependencies.
     if !is_direct_target || is_crate_type_lib() {
         let cmd = match which::which("sccache") {
             Ok(sccache_path) => {
                 let mut cmd = Command::new(&sccache_path);
-                // ["cargo-rusd", "rustc", ...]
+                // ["cargo-rustsoda", "rustc", ...]
                 cmd.args(std::env::args().skip(1));
                 cmd
             }
             Err(_) => {
                 // sccache was not found, use vanilla rustc
                 let mut cmd = Command::new("rustc");
-                // ["cargo-rusd", "rustc", ...]
+                // ["cargo-rustsoda", "rustc", ...]
                 cmd.args(std::env::args().skip(2));
                 cmd
             }
@@ -496,26 +496,26 @@ fn phase_cargo_rustc() {
 }
 
 fn main() {
-    // Check for version and help flags even when invoked as `cargo-rusd`.
+    // Check for version and help flags even when invoked as `cargo-rustsoda`.
     if std::env::args().any(|a| a == "--help" || a == "-h") {
         show_help();
         return;
     }
 
-    log::setup_logging(Verbosity::Normal).expect("RUSD failed to initialize");
+    log::setup_logging(Verbosity::Normal).expect("RUSTSODA failed to initialize");
 
-    if let Some("rusd") = std::env::args().nth(1).as_ref().map(AsRef::as_ref) {
-        progress_info!("Running cargo rusd");
-        // This arm is for when `cargo rusd` is called. We call `cargo rustc` for each applicable target,
-        // but with the `RUSTC` env var set to the `cargo-rusd` binary so that we come back in the other branch,
-        // and dispatch the invocations to `rustc` and `rusd`, respectively.
-        phase_cargo_rusd();
-        progress_info!("cargo rusd finished");
+    if let Some("rustsoda") = std::env::args().nth(1).as_ref().map(AsRef::as_ref) {
+        progress_info!("Running cargo rustsoda");
+        // This arm is for when `cargo rustsoda` is called. We call `cargo rustc` for each applicable target,
+        // but with the `RUSTC` env var set to the `cargo-rustsoda` binary so that we come back in the other branch,
+        // and dispatch the invocations to `rustc` and `rustsoda`, respectively.
+        phase_cargo_rustsoda();
+        progress_info!("cargo rustsoda finished");
     } else if let Some("rustc") = std::env::args().nth(1).as_ref().map(AsRef::as_ref) {
-        // This arm is executed when `cargo-rusd` runs `cargo rustc` with the `RUSTC_WRAPPER` env var set to itself:
-        // dependencies get dispatched to `rustc`, the final test/binary to `rusd`.
+        // This arm is executed when `cargo-rustsoda` runs `cargo rustc` with the `RUSTC_WRAPPER` env var set to itself:
+        // dependencies get dispatched to `rustc`, the final test/binary to `rustsoda`.
         phase_cargo_rustc();
     } else {
-        show_error("`cargo-rusd` must be called with either `rusd` or `rustc` as first argument.");
+        show_error("`cargo-rustsoda` must be called with either `rustsoda` or `rustc` as first argument.");
     }
 }

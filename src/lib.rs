@@ -19,17 +19,17 @@ use rustc_middle::ty::TyCtxt;
 use crate::call_graph::call_graph_builder::*;
 //use crate::johnson_find_cycles::elementary_cycles_search::*;
 
-pub static RUSD_DEFAULT_ARGS: &[&str] = &["-Zalways-encode-mir", "-Zmir-opt-level=0"];
+pub static RUSTSODA_DEFAULT_ARGS: &[&str] = &["-Zalways-encode-mir", "-Zmir-opt-level=0"];
 
 
 #[derive(Debug, Clone, Copy)]
-pub struct RusdConfig {
+pub struct RustSodaConfig {
     pub verbosity: Verbosity, 
 }
 
-impl Default for RusdConfig {
+impl Default for RustSodaConfig {
     fn default() -> Self {
-        RusdConfig {
+        RustSodaConfig {
             verbosity: Verbosity::Normal, 
         }
     }
@@ -54,13 +54,14 @@ pub fn compile_time_sysroot() -> Option<String> {
     Some(match (home, toolchain) {
         (Some(home), Some(toolchain)) => format!("{}/toolchains/{}", home, toolchain),
         _ => option_env!("RUST_SYSROOT")
-            .expect("To build rusd without rustup, set the `RUST_SYSROOT` env var at build time")
+            .expect("To build rustsoda without rustup, set the `RUST_SYSROOT` env var at build time")
             .to_owned(),
     })
 }
 
-pub fn main_entry(tcx: TyCtxt, _config: RusdConfig) {
+pub fn main_entry(tcx: TyCtxt, _config: RustSodaConfig) {
      let call_graph_info = call_graph_builder(tcx);
-    // call_graph_info.print_call_graph();
+     println!("total function num: {}", call_graph_info.functions.borrow().len());
+     // call_graph_info.print_call_graph();
      get_adj_list_and_find_cycles(tcx, &call_graph_info);     
 }

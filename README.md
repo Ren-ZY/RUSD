@@ -45,26 +45,26 @@ Now we have used this tool to find all the problematic recursive functions in th
 
 ```
 [toolchain]
-channel = "nightly-2021-01-03"
+channel = "nightly-2020-08-24"
 components = ["rustc-dev", "llvm-tools-preview", "rust-src"]
 ```
 
 This file will automatically downlod the toolcahin and components to build RustSoda tool.
 
-**2. Run "install_rusd.sh" in your rusd root directory.**
+**2. Run "install_rustsoda.sh" in your rusd root directory.**
 
 The **RustSoda** tool uses a shell script called `install_rusd.sh` to build and install.
 You have to switch into the rusd root directory and run it in your bash(Linux)/zsh(MacOS). 
 
 ```
-./install_rusd.sh
+./install_rustsoda.sh
 ```
 
-**install_rusd.sh** can install the binary tool into your CARGO_HOME/bin. 
+**install_rustsoda.sh** can install the binary tool into your CARGO_HOME/bin. 
 
 In Linux, the CARGO_HOME always means ~/.cargo/.
 
-**NOTE**: Rust has developed fast nowadays. Different channel has different rustc API and rust features. Some new version crates cannot be compiled with the old rustc compiler. So we provide two versions of RUSD, separately using nightly-2020-08-24 and nightly-2021-01-03. You can also modify the source code using the new version rustc API and change the toolchain manually if some crates cannot be compiled successfully using our tool.
+**NOTE**: Rust has developed fast nowadays. Different channel has different rustc API and rust features. Some new version crates cannot be compiled with the old rustc compiler. We build our tool using the toolchain of nightly-2020-08-24. You can also modify the source code using the new version rustc API and change the toolchain manually if some crates cannot be compiled successfully using our tool.
 
 
 ## Using RustSoda

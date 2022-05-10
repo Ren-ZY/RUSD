@@ -20,7 +20,7 @@ pub fn setup_logging(verbosity: Verbosity) -> Result<(), fern::InitError> {
     }
     .level_for(
         // log >= debug on debug build and >= info on release build
-        "rusd-progress",
+        "rustsoda-progress",
         if cfg!(debug_assertions) {
             LevelFilter::Debug
         } else {
@@ -28,9 +28,9 @@ pub fn setup_logging(verbosity: Verbosity) -> Result<(), fern::InitError> {
         },
     );
 
-    if let Some(log_file_path) = env::var_os("RUSD_LOG_PATH") {
+    if let Some(log_file_path) = env::var_os("RUSTSODA_LOG_PATH") {
         let file_config = fern::Dispatch::new()
-            .filter(|metadata| metadata.target() == "rusd-progress")
+            .filter(|metadata| metadata.target() == "rustsoda-progress")
             .format(|out, message, record| {
                 out.finish(format_args!(
                     "{} |PROGRESS-{:5}| {}",
@@ -65,34 +65,35 @@ pub fn setup_logging(verbosity: Verbosity) -> Result<(), fern::InitError> {
 #[macro_export]
 macro_rules! progress_trace {
     ($($arg:tt)+) => {
-        ::log::trace!(target: "rusd-progress", $($arg)+)
+        ::log::trace!(target: "rustsoda-progress", $($arg)+)
     }
 }
 
 #[macro_export]
 macro_rules! progress_debug {
     ($($arg:tt)+) => {
-        ::log::debug!(target: "rusd-progress", $($arg)+)
+        ::log::debug!(target: "rustsoda-progress", $($arg)+)
     };
 }
 
 #[macro_export]
 macro_rules! progress_info {
     ($($arg:tt)+) => {
-        ::log::info!(target: "rusd-progress", $($arg)+)
+        ::log::info!(target: "rustsoda-progress", $($arg)+)
     };
 }
 
 #[macro_export]
 macro_rules! progress_warn {
     ($($arg:tt)+) => {
-        ::log::warn!(target: "rusd-progress", $($arg)+)
+        ::log::warn!(target: "rustsoda-progress", $($arg)+)
     };
 }
 
 #[macro_export]
 macro_rules! progress_error {
     ($($arg:tt)+) => {
-        ::log::error!(target: "rusd-progress", $($arg)+)
+        ::log::error!(target: "rustsoda-progress", $($arg)+)
     };
 }
+

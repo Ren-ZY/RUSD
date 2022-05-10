@@ -114,29 +114,29 @@ pub fn get_adj_list_and_find_cycles(tcx: TyCtxt, call_graph_info: &CallGraphInfo
     let mut ecs = ElementaryCyclesSearch::new(&call_graph_adj_list, &nodes);
     let cycles = ecs.get_elementary_cycles();
     for i in 0..cycles.len(){
-        if cycles[i].len() > 1{
-        let mut res = String::new();
-        let cycle = cycles[i].clone();
-        for j in 0..cycle.len(){
-            let node = cycle[j].clone();
-            if j < cycle.len() - 1 {
-                //print!("{}->", node);
-                res.push_str(&node);
-                res.push_str("->");
-            }else{
-                res.push_str(&node);
-                res.push_str("->");
-                res.push_str(&cycle[0].clone());
+        if cycles[i].len() > 1 {
+            let mut res = String::new();
+            let cycle = cycles[i].clone();
+            for j in 0..cycle.len(){
+                let node = cycle[j].clone();
+                if j < cycle.len() - 1 {
+                    //print!("{}->", node);
+                    res.push_str(&node);
+                    res.push_str("->");
+                }else{
+                    res.push_str(&node);
+                    res.push_str("->");
+                    res.push_str(&cycle[0].clone());
+                }
+            }
+            let msg = "\x1b[031mwarning!! find a recursion function which may cause stackoverflow\x1b[0m";
+            if let Some(id) = call_graph_info.get_node_by_def_path(&cycle[0]){
+                if let Some(first_node) = call_graph_info.functions.borrow().get(&id){
+                    let first_node_def_id = first_node.get_def_id();
+                    let location = get_fn_location(&tcx, first_node_def_id);
+                    progress_info!("{}:{}; \x1b[031mlocation:\x1b[0m {}", msg, res, location);   
+                }
             }
         }
-        let msg = "\x1b[031mwarning!! find a recursion function which may cause stackoverflow\x1b[0m";
-        if let Some(id) = call_graph_info.get_node_by_def_path(&cycle[0]){
-            if let Some(first_node) = call_graph_info.functions.borrow().get(&id){
-                let first_node_def_id = first_node.get_def_id();
-                let location = get_fn_location(&tcx, first_node_def_id);
-                progress_info!("{}:{}; \x1b[031mlocation:\x1b[0m {}", msg, res, location);   
-            }
-        }
-      }
     }
 }

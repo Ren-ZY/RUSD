@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Building RUSD and install RUSD by Cargo"
+echo "Building RUSTSODA and install RUSTSODA by Cargo"
 #cargo clean
 #for debug version
 #cargo install --debug --path "$(dirname "$0")" --force --features backtraces

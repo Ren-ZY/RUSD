@@ -1,9 +1,9 @@
 
 [package]
-name = "rusd"
+name = "rustsoda"
 version = "0.1.0"
 authors = ["ZhiYong Ren <20210240038@fudan.edu.cn>"]
-default-run = "rusd"
+default-run = "rustsoda"
 edition = "2018"
 # exclude = ["samples"]
 
@@ -14,12 +14,12 @@ test = false
 doctest = false
 
 [[bin]]
-name = "rusd"
+name = "rustsoda"
 test = false
 doctest = false
 
 [[bin]]
-name = "cargo-rusd"
+name = "cargo-rustsoda"
 test = false
 doctest = false
 

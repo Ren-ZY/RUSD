@@ -55,6 +55,7 @@ This file will automatically downlod the toolcahin and components to build RustS
 
 The **RustSoda** tool uses a shell script called `install_rustsoda.sh` to build and install.
 You have to switch into the rusd root directory and run it in your bash(Linux)/zsh(MacOS). 
+**Node**: You may have to use "**chomd 777 install_rustsoda.sh**" to make the script executable.
 
 ```
 ./install_rustsoda.sh

@@ -9,8 +9,13 @@ RustSoda是一款用于寻找Rust程序中所有具有栈溢出风险API的工�
 
 本项目的目录结构为：
 
-src--RustSoda源程序代码
-cve--已有Rust语言栈溢出漏洞
-crate--用于实验的新Rust工程项目
-instrumentation--
+src--RustSoda源程序代码, cve--已有Rust语言栈溢出漏洞, crate--用于实验的新Rust工程项目, instrumentation--用于插桩的目录
+
+本工具的使用方法：
+
+1. 通过添加rustsoda.toml将Rust版本切换到指定版本。
+2. 使用本仓库中提供的install_rustsoda.sh脚本安装此工具。
+3. 在需要被检测的工程项目下使用cargo rustsoda命令找出所有存在栈溢出风险的API。
+4. 根据API手动构造模糊测试驱动。
+5. 使用cargo afl fuzz命令对API进行模糊测试以寻找栈溢出漏洞。
 

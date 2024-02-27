@@ -1,13 +1,8 @@
-This project contains the source code of our stack overflow detection tool----RustSoda.
+这个仓库主要包含Rust语言栈溢出检测工具--RustSoda
 
-While running, RustSoda will first build a robust call graph on Rust MIR, then it will use Tarjan algorithm and BFS to find the entry API of SCCs in the call graph.
+RustSoda是一款用于寻找Rust程序中所有具有栈溢出风险API的工具，该工具基于Rust MIR构建，通过Rust编译器提供的API构建鲁棒函数调用流图，同时采用Tarjan算法
+寻找图内强连通分量，强连通分量包含程序内所有的环，每个环代表程序内的递归函数。由于在实际项目中，递归函数往往被设置为私有，无法直接访问，因此需要寻找其顶层提供
+给开发者的API(public)。我们采用反向BFS的方式对这些API进行搜索。
 
-After that, we use modified AFL to accelrate the detection process of stack overflow bugs.
-
-To use this tool, you need: 
-
-1. run commend './install_rustsoda.sh'
-
-2. then use 'cargo rustsoda' to find the the dangerous API in the sccs in the project.
-
-3. use AFL to exercise the API which found by our tool.
+本项目的目录结构为：
+src: RustSoda源程序代码

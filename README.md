@@ -13,7 +13,7 @@ These two recursive functions share two same functions: b(), c()
 Our tool can detect these two recursive functions, including the call chain and location.
 ```
 
-All the recursions are appeared in the strongly connected components (SCCs)，this tool can locate the entry APIs which lead to the SCCs.
+All the recursions appear in the strongly connected components (SCCs)，this tool can locate the entry APIs which lead to the SCCs.
 Each SCC has stack overflow risks and needs to verify.
 
 Now we have used this tool to find all the problematic recursive functions in those stack overflow CVEs, including:

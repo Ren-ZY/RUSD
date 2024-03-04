@@ -1,4 +1,4 @@
-RustSoda -- Rust Stackoverflow Detector 
+
 # RustSoda -- Rust Stack Overflow Detector 
 
 **Thank you for noticing our tool!**

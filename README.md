@@ -55,4 +55,4 @@ You can use this tool to detect stackoverflow vulnerability in rust crates after
 2. copy the **"rust-toolchain.toml"** file into your **crate** directory.
 3. run **cargo rustsoda** to find all the dangerous APIs in your Rust crates which may cause stackoverflow bugs.
 4. construct the **fuzz target** manually using the APIs found by our tool.
-5. run "cargo afl fuzz" to detect the stack overflow bugs in your Rust crates.
+5. run ```cargo afl fuzz``` to detect the stack overflow bugs in your Rust crates.

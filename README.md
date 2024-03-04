@@ -1,21 +1,52 @@
-这个仓库主要包含Rust语言栈溢出检测工具--RustSoda
+RustSoda -- Rust Stackoverflow Detector 
+# RustSoda -- Rust Stack Overflow Detector 
 
-RustSoda是一款用于寻找Rust程序中所有具有栈溢出风险API的工具，该工具基于Rust MIR构建，通过Rust编译器提供的API构建鲁棒函数调用流图，同时采用Tarjan算法
-寻找图内强连通分量，强连通分量包含程序内所有的环，每个环代表程序内的递归函数。由于在实际项目中，递归函数往往被设置为私有，无法直接访问，因此需要寻找其顶层提供
-给开发者的API(public)。我们采用反向BFS的方式对这些API进行搜索。
+**Thank you for noticing our tool!**
 
-此外，为了验证所定位的强连通分量是否确实存在栈溢出风险，我们采用模糊测试的方法对搜寻的具有栈溢出风险的API进行验证。同时，为了加速模糊测试过程，本文改进了已有模糊测试
-工具AFL的插桩和种子变异策略，以更快的触发栈溢出异常。
+This tool is designed to find the stackoverflow vulnerabilty in Rust crates.
+It can find all **recursive functions** in one crate, including those complicate **cross-function recursive calls**. e.g.
 
-本项目的目录结构为：
+```
+1. b()->c()->b()
+2. a()->b()->c()->d()->a()
+These two recursive functions share two same functions: b(), c() 
+Our tool can detect these two recursive functions, including the call chain and location
+```
 
-src--RustSoda源程序代码, cve--已有Rust语言栈溢出漏洞, crate--用于实验的新Rust工程项目, instrumentation--用于插桩的目录
+Now we have used this tool to find all the problematic recursive functions in those stack overflow CVEs, including:
 
-本工具的使用方法：
+* CVE-2018-20993:  Uncontrolled recursion leads to abort in deserialization
+* CVE-2018-20994:  Stackoveflow when parsing malicious DNS packet
+* CVE-2019-15542:  Uncontrolled recursion leads to abort in HTML serialization
+* CVE-2019-25001:  Flaw in CBOR deserializer allows stackoveflow
+* CVE-2020-35857:  Stackoverflow when resolving additional records from MX or SRV null targets
+* CVE-2020-35857:  Stac koverflow when resolving additional records from MX or SRV null targets
+* CVE-2020-35858:  Parsing a specially crafted message can result in a stackoverflow
 
-1. 通过添加rustsoda.toml将Rust版本切换到指定版本。
-2. 使用本仓库中提供的install_rustsoda.sh脚本安装此工具。
-3. 在需要被检测的工程项目下使用cargo rustsoda命令找出所有存在栈溢出风险的API。
-4. 根据API手动构造模糊测试驱动。
-5. 使用cargo afl fuzz命令对API进行模糊测试以寻找栈溢出漏洞。
+## Install
 
+**1. New a file named [rust-toolchain.toml] in the rusd root directory, then write the following lines into your [rust-toolchain.toml]**.
+
+
+```
+[toolchain]
+channel = "nightly-2020-08-24"
+components = ["rustc-dev", "llvm-tools-preview", "rust-src"]
+```
+
+This file will automatically downlod the toolcahin and components to build RustSoda tool.
+
+
+**2. Run "install_rustsoda.sh" in your rusd root directory.**
+
+
+The **RustSoda** tool uses a shell script called `install_rustsoda.sh` to build and install.
+You have to switch into the rusd root directory and run it in your bash(Linux)/zsh(MacOS). 
+
+## Using RustSoda
+
+You can use this tool to detect stackoverflow vulnerability in rust crates after the installation is done. 
+
+
+1. Switch into your crate directory.
+2. copy the **"rust-toolchain.toml"** file into your **crate** directory.
